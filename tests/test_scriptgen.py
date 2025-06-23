@@ -1,11 +1,14 @@
 import pytest
 from graph.scriptgen import ScriptGen, stripfence
 
+
 class DummyLLM:
     def invoke(self, prompt):
         class Response:
             content = '```python\nprint("abcd")\n```'
+
         return Response()
+
 
 def test_stripfence():
     md = '```python\nprint("abcd")\n```'
@@ -16,7 +19,5 @@ def test_stripfence():
 async def test_scriptgen_run():
     llm = DummyLLM()
     sg = ScriptGen(llm=llm)
-    result = await sg.run('fake input')
+    result = await sg.run("fake input")
     assert result == 'print("abcd")\n'
-
-

@@ -8,14 +8,16 @@ from graph.scriptgen import ScriptGen
 import logging
 from graph.state import SandboxState
 from langgraph.graph.state import CompiledStateGraph
-import asyncio
+from mcp.server.fastmcp import FastMCP
+
+logging.basicConfig(level=logging.DEBUG)
 
 config = dotenv_values(Path(".env"))
 
 logger = logging.getLogger(__name__)
 
 
-class DATAVIEW:
+class DATAGENIE:
     def __init__(
         self,
     ):
@@ -51,10 +53,12 @@ class DATAVIEW:
         return workflow.compile()
 
 
-if __name__ == "__main__":
-    initial_state = SandboxState(
-        input="give me a buggy fib function in python, and casues a runtime error"
-    )
-    dataview = DATAVIEW()
-    result = asyncio.run(dataview.graph.ainvoke(initial_state))
-    print(result)
+mcp = FastMCP("datagenie", version="0.1.0")
+
+@mcp.tool(
+    name="generate_script", description="Generate Python script from a natural language prompt and run it in a sandbox environment, return the result"
+)
+async def generate_script(prompt: str) -> dict:
+    datagenie = DATAGENIE()
+    result = await datagenie.graph.ainvoke(SandboxState(input=prompt))
+    return result
