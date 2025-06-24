@@ -24,9 +24,8 @@ async def generate_script(prompt: str) -> dict:
 
 async def main():
     await ScriptSandbox.warmup()
-    await mcp.run_async(transport="streamable-http",
-                         host="0.0.0.0",
-                         port=8000)
+    await mcp.run_async(transport="streamable-http", host="0.0.0.0", port=8000)
+
 
 if __name__ == "__main__":
     asyncio.run(main())
