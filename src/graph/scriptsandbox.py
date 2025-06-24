@@ -25,9 +25,9 @@ class ScriptSandbox:
                 "stdio",
             ],
         )
-        # Do not call warmup here
 
-    async def warmup(self):
+    @staticmethod
+    async def warmup():
         cmd = [
             "deno",
             "run",

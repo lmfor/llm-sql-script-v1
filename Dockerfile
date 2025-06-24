@@ -24,4 +24,7 @@ RUN uv pip install --no-cache-dir .
 COPY src ./src
 COPY tests ./tests
 COPY .env pytest.ini ./
-CMD ["python", "src/dataview.py"]
+
+EXPOSE 3000
+
+CMD ["python", "src/main.py"]
