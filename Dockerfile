@@ -25,6 +25,4 @@ COPY src ./src
 COPY tests ./tests
 COPY .env pytest.ini ./
 
-EXPOSE 3000
-
 CMD ["python", "src/main.py"]

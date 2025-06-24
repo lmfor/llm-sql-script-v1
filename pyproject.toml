@@ -15,6 +15,7 @@ dependencies = [
 [tool.uv]
 dev-dependencies = [
     "black>=25.1.0",
+    "docker>=7.1.0",
     "pytest-asyncio>=1.0.0",
     "pytest>=8.4.1",
 ]

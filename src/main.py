@@ -1,6 +1,4 @@
 from fastmcp import FastMCP
-from starlette.requests import Request
-from starlette.responses import PlainTextResponse
 import asyncio
 from workflow import AnalysisWorkflow
 from graph.scriptsandbox import ScriptSandbox
@@ -24,15 +22,11 @@ async def generate_script(prompt: str) -> dict:
     return result
 
 
-@mcp.custom_route("/health", methods=["GET"])
-async def health_check(request: Request) -> PlainTextResponse:
-    return PlainTextResponse("OK")
-
-
 async def main():
     await ScriptSandbox.warmup()
-    await mcp.run_streamable_http_async()
-
+    await mcp.run_async(transport="streamable-http",
+                         host="0.0.0.0",
+                         port=8000)
 
 if __name__ == "__main__":
     asyncio.run(main())
